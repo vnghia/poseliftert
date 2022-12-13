@@ -57,3 +57,27 @@ include(poseliftert/external/cxxopts)
 
 # MinRT
 include(poseliftert/external/minrt)
+
+# poselifter
+add_library(${PROJECT_NAME}
+  src/input/input.cpp
+  src/input/normalization.cpp
+)
+
+target_compile_features(${PROJECT_NAME} PUBLIC cuda_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:
+  --expt-relaxed-constexpr
+  >
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  ${PROJECT_SOURCE_DIR}/include
+)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC
+  spdlog::spdlog
+  CUDA::cudart
+  minrt
+)
