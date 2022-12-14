@@ -46,6 +46,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_ROOT_DIR}/lib/${CMAKE_BUILD_TYPE}"
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_ROOT_DIR}/lib/${CMAKE_BUILD_TYPE}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_ROOT_DIR}/bin/${CMAKE_BUILD_TYPE}")
 
+# Options
+option(POSELIFTERT_BUILD_SAMPLE "Build Poseliftert sanple" ${PROJECT_IS_TOP_LEVEL})
+
 # CUDA
 find_package(CUDAToolkit REQUIRED)
 
@@ -87,12 +90,14 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
   minrt
 )
 
-# cli
-add_executable(cli
-  sample/cli.cpp
-)
+if(POSELIFTERT_BUILD_SAMPLE)
+  # cli
+  add_executable(cli
+    sample/cli.cpp
+  )
 
-target_link_libraries(cli PUBLIC
-  ${PROJECT_NAME}
-  cxxopts::cxxopts
-)
+  target_link_libraries(cli PUBLIC
+    ${PROJECT_NAME}
+    cxxopts::cxxopts
+  )
+endif()
