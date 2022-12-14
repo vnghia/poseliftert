@@ -83,3 +83,13 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
   CUDA::cudart
   minrt
 )
+
+# cli
+add_executable(cli
+  sample/cli.cpp
+)
+
+target_link_libraries(cli PUBLIC
+  ${PROJECT_NAME}
+  cxxopts::cxxopts
+)
