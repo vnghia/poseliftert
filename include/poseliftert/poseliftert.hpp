@@ -29,9 +29,6 @@ class Poseliftert {
   const unsigned int width;
   const unsigned int height;
 
-  const unsigned int pose_2d_dim = 2;
-  const unsigned int pose_3d_dim = 3;
-
  private:
   void malloc_memory(float* body25_output_ptr);
 

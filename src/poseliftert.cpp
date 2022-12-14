@@ -24,11 +24,11 @@ void Poseliftert::malloc_memory(float* body25_output_ptr) {
 
   const bool use_body25_output = (body25_output_ptr != nullptr);
   if (!use_body25_output) {
-    auto input_size = pose_2d_dim * kNum2DJoints;
+    auto input_size = kNum2dDim * kNum2DJoints;
     input_data_.reset(new float[input_size]);
     input_ptr_ = input_data_.get();
     spdlog::info("allocated {} byte for image input data dims=[{}, {}]",
-                 input_size * sizeof(float), kNum2DJoints, pose_2d_dim);
+                 input_size * sizeof(float), kNum2DJoints, kNum2dDim);
   } else {
     input_ptr_ = body25_output_ptr;
     spdlog::info("use BODY_25 output from Openpose at {}",
@@ -48,10 +48,10 @@ void Poseliftert::malloc_memory(float* body25_output_ptr) {
   input_ = Input(input_ptr_, width, height, net_input_data_.get(),
                  use_body25_output);
 
-  auto output_size = pose_3d_dim * kNum3DJoints;
+  auto output_size = kNum3dDim * kNum3DJoints;
   output_data_.reset(new float[output_size]);
   spdlog::info("allocated {} byte for output data dims=[{}, {}]",
-               output_size * sizeof(float), kNum3DJoints, pose_3d_dim);
+               output_size * sizeof(float), kNum3DJoints, kNum3dDim);
 
   output_ = Output(net_output_data_.get(), output_data_.get());
 }
