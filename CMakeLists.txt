@@ -63,6 +63,8 @@ add_library(${PROJECT_NAME}
   src/input/input.cpp
   src/input/normalization.cpp
 
+  src/output/output.cpp
+
   src/poseliftert.cpp
 )
 

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "minrt/minrt.hpp"
 #include "poseliftert/input/input.hpp"
+#include "poseliftert/output/output.hpp"
 
 namespace poseliftert {
 
@@ -19,7 +22,7 @@ class Poseliftert {
 
   auto get_input_data() { return input_data_.get(); }
 
-  auto get_net_output_data() { return net_output_data_.get(); }
+  auto get_output_data() { return output_data_.get(); }
 
   void forward();
 
@@ -27,6 +30,7 @@ class Poseliftert {
   const unsigned int height;
 
   const unsigned int pose_2d_dim = 2;
+  const unsigned int pose_3d_dim = 3;
 
  private:
   void malloc_memory();
@@ -37,6 +41,9 @@ class Poseliftert {
   Input input_;
 
   std::shared_ptr<float[]> net_output_data_;
+  std::shared_ptr<float[]> output_data_;
+
+  Output output_;
 };
 
 }  // namespace poseliftert

@@ -2,6 +2,7 @@
 
 #include "poseliftert/config.hpp"
 #include "poseliftert/input/input.hpp"
+#include "poseliftert/output/output.hpp"
 #include "spdlog/spdlog.h"
 
 namespace poseliftert {
@@ -37,6 +38,13 @@ void Poseliftert::malloc_memory() {
                fmt::ptr(net_output_data_.get()));
 
   input_ = Input(input_data_.get(), width, height, net_input_data_.get());
+
+  auto output_size = pose_2d_dim * kNum2DJoints;
+  output_data_.reset(new float[output_size]);
+  spdlog::info("allocated {} byte for output data dims=[{}, {}]",
+               input_size * sizeof(float), kNum3DJoints, pose_3d_dim);
+
+  output_ = Output(net_output_data_.get(), output_data_.get());
 }
 
 void Poseliftert::forward() {
@@ -44,6 +52,8 @@ void Poseliftert::forward() {
 
   engine_.forward();
   cudaDeviceSynchronize();
+
+  output_.process();
 }
 
 }  // namespace poseliftert
