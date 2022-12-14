@@ -22,6 +22,8 @@ static constexpr std::array<std::array<unsigned int, 2>, 14> BODY_25_INDEX_MAP =
       {15, 3},
       {16, 4}}};
 
+static constexpr unsigned int kBody25Dim = 3;
+
 inline float normalized(float input, float offset, float scale) {
   return (input - offset) / scale;
 }
@@ -32,8 +34,8 @@ void from_body25(float* normalized_ptr, const float* const input_ptr,
   const auto offset_width = scale;
   const auto offset_height = 0.5f * height;
 
-  auto l_shoulder_index = 5 * kNum2dDim;
-  auto r_shoulder_index = 2 * kNum2dDim;
+  auto l_shoulder_index = 5 * kBody25Dim;
+  auto r_shoulder_index = 2 * kBody25Dim;
   auto thorax_x =
       (input_ptr[l_shoulder_index] + input_ptr[r_shoulder_index]) / 2;
   auto thorax_y =
@@ -41,7 +43,7 @@ void from_body25(float* normalized_ptr, const float* const input_ptr,
 
   {
     auto normalized_index = 7 * kNum2dDim;
-    auto hip_index = 8 * kNum2dDim;
+    auto hip_index = 8 * kBody25Dim;
     normalized_ptr[normalized_index] =
         normalized((input_ptr[hip_index] + thorax_x) / 2, offset_width, scale);
     normalized_ptr[normalized_index + 1] = normalized(
@@ -58,8 +60,8 @@ void from_body25(float* normalized_ptr, const float* const input_ptr,
 
   {
     auto normalized_index = 10 * kNum2dDim;
-    auto l_eye_index = 16 * kNum2dDim;
-    auto r_eye_index = 15 * kNum2dDim;
+    auto l_eye_index = 16 * kBody25Dim;
+    auto r_eye_index = 15 * kBody25Dim;
     normalized_ptr[normalized_index] =
         normalized((input_ptr[l_eye_index] + input_ptr[r_eye_index]) / 2,
                    offset_width, scale);
@@ -70,7 +72,7 @@ void from_body25(float* normalized_ptr, const float* const input_ptr,
 
   for (const auto& idx_pair : BODY_25_INDEX_MAP) {
     auto normalized_index = idx_pair[0] * kNum2dDim;
-    auto input_index = idx_pair[1] * kNum2dDim;
+    auto input_index = idx_pair[1] * kBody25Dim;
     normalized_ptr[normalized_index] =
         normalized(input_ptr[input_index], offset_width, scale);
     normalized_ptr[normalized_index + 1] =
