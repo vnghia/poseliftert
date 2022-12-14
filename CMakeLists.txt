@@ -64,6 +64,7 @@ include(poseliftert/external/minrt)
 # poselifter
 add_library(${PROJECT_NAME}
   src/input/input.cpp
+  src/input/from_body25.cpp
   src/input/normalization.cpp
 
   src/output/output.cpp

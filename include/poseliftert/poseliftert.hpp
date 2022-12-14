@@ -16,11 +16,11 @@ class Poseliftert {
 
  public:
   Poseliftert(const fs::path& engine_path, unsigned int width,
-              unsigned int height);
+              unsigned int height, float* body25_output_ptr = nullptr);
 
   Engine& engine() { return engine_; }
 
-  auto get_input_data() { return input_data_.get(); }
+  auto get_input_data() { return input_ptr_; }
 
   auto get_output_data() { return output_data_.get(); }
 
@@ -33,8 +33,9 @@ class Poseliftert {
   const unsigned int pose_3d_dim = 3;
 
  private:
-  void malloc_memory();
+  void malloc_memory(float* body25_output_ptr);
 
+  float* input_ptr_;
   std::shared_ptr<float[]> input_data_;
   std::shared_ptr<float[]> net_input_data_;
 
