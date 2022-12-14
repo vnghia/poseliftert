@@ -22,7 +22,7 @@ void Poseliftert::malloc_memory() {
 
   spdlog::info("malloc memory for Poseliftert");
 
-  auto input_size = pose_2d_dim * kNum2DJoints * sizeof(float);
+  auto input_size = pose_2d_dim * kNum2DJoints;
   input_data_.reset(new float[input_size]);
   spdlog::info("allocated {} byte for image input data dims=[{}, {}]",
                input_size * sizeof(float), kNum2DJoints, pose_2d_dim);
@@ -39,10 +39,10 @@ void Poseliftert::malloc_memory() {
 
   input_ = Input(input_data_.get(), width, height, net_input_data_.get());
 
-  auto output_size = pose_2d_dim * kNum2DJoints;
+  auto output_size = pose_3d_dim * kNum3DJoints;
   output_data_.reset(new float[output_size]);
   spdlog::info("allocated {} byte for output data dims=[{}, {}]",
-               input_size * sizeof(float), kNum3DJoints, pose_3d_dim);
+               output_size * sizeof(float), kNum3DJoints, pose_3d_dim);
 
   output_ = Output(net_output_data_.get(), output_data_.get());
 }
