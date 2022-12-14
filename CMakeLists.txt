@@ -62,6 +62,8 @@ include(poseliftert/external/minrt)
 add_library(${PROJECT_NAME}
   src/input/input.cpp
   src/input/normalization.cpp
+
+  src/poseliftert.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cuda_std_17)
